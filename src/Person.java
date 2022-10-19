@@ -1,16 +1,33 @@
-import java.util.Objects;
-
 public class Person {
     private String name;
-    private final int yearOfBirth;
+    private int yearOfBirth;
     private String city;
-    private String occupation;
+    private String job;
 
-    public Person(String name, int yearOfBirth, String city, String occupation) {
-        this.name = Objects.requireNonNullElse(name, "(информация не указана)");
-        this.city = Objects.requireNonNullElse(city, "(информация не указана)");
-        this.occupation = Objects.requireNonNullElse(occupation, "(информация не указана)");
-        this.yearOfBirth = Math.abs(yearOfBirth);
+    public Person(String name, int yearOfBirth, String city, String job) {
+        if (name != null && !name.isBlank() && !name.isEmpty()) {
+            this.name = name;
+        } else {
+            this.name = "(информация не указана)";
+        }
+
+        if (yearOfBirth >= 0) {
+            this.yearOfBirth = yearOfBirth;
+        } else {
+            this.yearOfBirth = 0;
+        }
+
+        if (city != null && !city.isBlank() && !city.isEmpty()) {
+            this.city = city;
+        } else {
+            this.city = "(информация не указана)";
+        }
+
+        if (job != null && !job.isBlank() && !job.isEmpty()) {
+            this.job = job;
+        } else {
+            this.job = "(информация не указана)";
+        }
     }
 
     public Person(String name) {
@@ -21,16 +38,16 @@ public class Person {
         this(name, yearOfBirth, null, null);
     }
 
-    public Person(String name, String city) {
-        this(name, 0, city, null);
-    }
-
     public Person(String name, int yearOfBirth, String city) {
         this(name, yearOfBirth, city, null);
     }
 
-    public Person(String name, String city, String occupation) {
-        this(name, 0, city, occupation);
+    public Person(String name, String city) {
+        this(name, 0, city, null);
+    }
+
+    public Person(String name, String city, String job) {
+        this(name, 0, city, job);
     }
 
     public String getName() {
@@ -45,24 +62,44 @@ public class Person {
         return city;
     }
 
-    public String getOccupation() {
-        return occupation;
+    public String getJob() {
+        return job;
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name != null && !name.isBlank() && !name.isEmpty()) {
+            this.name = name;
+        } else {
+            this.name = "(информация не указана)";
+        }
+    }
+
+    public void setYearOfBirth(int yearOfBirth) {
+        if (yearOfBirth >= 0) {
+            this.yearOfBirth = yearOfBirth;
+        } else {
+            this.yearOfBirth = 0;
+        }
     }
 
     public void setCity(String city) {
-        this.city = city;
+        if (city != null && !city.isBlank() && !city.isEmpty()) {
+            this.city = city;
+        } else {
+            this.city = "(информация не указана)";
+        }
     }
 
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
+    public void setJob(String job) {
+        if (job != null && !job.isBlank() && !job.isEmpty()) {
+            this.job = job;
+        } else {
+            this.job = "(информация не указана)";
+        }
     }
 
     public void sayHello() {
-        System.out.printf("Привет! Меня зовут %s. Я из города %s. Я родился в %s году. Я работаю на должности %s. Будем знакомы!%n",
-                getName(), getCity(), getYearOfBirth(), getOccupation());
+        System.out.printf("Привет! Меня зовут %s. Я из города %s. Я родился(ась) в %s году. Я работаю на должности '%s'. Будем знакомы!%n",
+                getName(), getCity(), getYearOfBirth(), getJob());
     }
 }
