@@ -20,19 +20,35 @@ public class Main {
 
         // Машины
 
-        Car lada = new Car("Lada", "Grande", 1.7, "жёлтый", 2015, "Россия");
-        Car audi = new Car("Audi", "A8 50 L TDI quattro", 3, "чёрный", 2020, "Германия");
-        Car bmw = new Car("BMW", "Z8", 3, "чёрный", 2021, "Германия");
-        Car kia = new Car("KIA", "Sportage 4", 2.4, "красный", 2018, "Южная Корея");
-        Car hyundai = new Car("Hyundai", "Avante", 1.6, "оранжевый", 2016, "Германия");
-        Car car = new Car(null, null, 0, null, 0, null);
+        //Car lada = new Car("Lada", "Grande", 1.7, "жёлтый", 2015, "Россия");
+        //Car audi = new Car("Audi", "A8 50 L TDI quattro", 3, "чёрный", 2020, "Германия");
+        //Car bmw = new Car("BMW", "Z8", 3, "чёрный", 2021, "Германия");
+        //Car kia = new Car("KIA", "Sportage 4", 2.4, "красный", 2018, "Южная Корея");
+        //Car hyundai = new Car("Hyundai", "Avante", 1.6, "оранжевый", 2016, "Германия");
+        //Car car = new Car(null, null, 0, null, 0, null);
 
-        lada.display();
-        audi.display();
-        bmw.display();
-        kia.display();
-        hyundai.display();
-        car.display();
+//        lada.display();
+//        audi.display();
+//        bmw.display();
+//        kia.display();
+//        hyundai.display();
+//        car.display();
+
+        System.out.println("");
+        Car car1 = new Car("Lada", "Grande", 1.7, "жёлтый", 2015, "Россия", null, null, null, null, null);
+//        car1.changeTires_Input();
+        System.out.println("новые шины - " + car1.getTires());
+        System.out.println("");
+
+        Car car2 = new Car("Lada", "Grande", 1.7, "жёлтый", 2015, "Россия", null, null, null, null, null);
+        car2.setTires("летняя");
+        System.out.println(car2.getTires());
+        car2.changeTires_Season();
+        System.out.println(car2.getTires());
+        System.out.println("");
+
+        car2.setRegistrationNumber("м123но123");
+        car2.checkRegNumFormatIsCorrect();
 
         // Цветы
 
