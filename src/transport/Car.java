@@ -16,8 +16,10 @@ public class Car {
     private final int seats;
     private String tires;
 
-    public Car(String brand, String model, Double engineVolume, String color, Integer year, String country,
-               String transmission, String bodyType, String registrationNumber, Integer seats, String tires) {
+    public Car(String brand, String model, Double engineVolume, String color, Integer year,
+               String country, String transmission, String bodyType, String registrationNumber,
+               Integer seats, String tires) {
+
         if (brand != null && !brand.isEmpty() && !brand.isBlank()) {
             this.brand = brand;
         } else {
@@ -79,12 +81,10 @@ public class Car {
         }
 
         if (tires != null && !tires.isEmpty() && !tires.isBlank()) {
-            switch (tires) {
-                case "летняя":
-                case "зимняя":
-                    this.tires = tires;
-                default:
-                    this.tires = "летняя";
+            if (tires.equals("зимняя") || tires.equals("летняя")) {
+                this.tires = tires;
+            } else {
+                this.tires = "летняя";
             }
         } else {
             this.tires = "летняя";
@@ -92,7 +92,18 @@ public class Car {
     }
 
     public void display() {
-
+        System.out.printf("%s %s со следующими характеристиками:%n" +
+                "Объём двигателя: %s л%n" +
+                "Цвет кузова: %s%n" +
+                "Год производства: %s%n" +
+                "Страна сборки: %s%n" +
+                "Коробка передач: %s%n" +
+                "Тип кузова: %s%n" +
+                "Регистрационный номер: %s%n" +
+                "Кол-во мест: %s%n" +
+                "Резина: %s%n",
+                brand, model, engineVolume, color, year, country, transmission,
+                bodyType, registrationNumber, seats, tires);
     }
 
     public String getBrand() {
@@ -173,27 +184,29 @@ public class Car {
 
     public void setTires(String tires) {
         if (tires != null && !tires.isEmpty() && !tires.isBlank()) {
-            switch (tires) {
-                case "летняя":
-                case "зимняя":
-                    this.tires = tires;
-                default:
-                    this.tires = "летняя";
+            if (tires.equals("зимняя") || tires.equals("летняя")) {
+                this.tires = tires;
+            } else {
+                this.tires = "летняя";
+                System.out.println("Введённое значение для резины шин не соответствует" +
+                        " 'зимняя' или 'летняя'. Присвоено значение по умолчанию - летняя резина.");
             }
         } else {
             this.tires = "летняя";
+            System.out.println("Введённое значение для резины шин не соответствует" +
+                    " 'зимняя' или 'летняя'. Присвоено значение по умолчанию - летняя резина.");
         }
     }
 
     public void changeTires_Input() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Нажмите 1 для смены резины на зимнюю или 2 для смены резины на летнюю");
-        if (scanner.hasNextInt()) {
-            int number = scanner.nextInt();
-            if (number == 1) {
+        if (scanner.hasNext()) {
+            String input = scanner.next();
+            if (input.equals("1")) {
                 tires = "зимняя";
                 System.out.println("Вы сменили шины на зимние");
-            } else if (number == 2) {
+            } else if (input.equals("2")) {
                 tires = "летняя";
                 System.out.println("Вы сменили шины на летние");
             } else {
@@ -214,7 +227,7 @@ public class Car {
 
     public void checkRegNumFormatIsCorrect() {
         if (registrationNumber.length() != 9) {
-            System.out.println("Регистрационный номер написан неправильно!");
+            System.out.println("Регистрационный номер записан неправильно!");
             return;
         }
         for (int i = 0; i < 9; i++) {
@@ -222,18 +235,18 @@ public class Car {
                 if (!Character.isDigit(registrationNumber.charAt(i))) {
                     continue;
                 } else {
-                    System.out.println("Регистрационный номер написан неправильно!");
+                    System.out.println("Регистрационный номер записан неправильно!");
                     return;
                 }
             } else {
                 if (Character.isDigit(registrationNumber.charAt(i))) {
                     continue;
                 } else {
-                    System.out.println("Регистрационный номер написан неправильно!");
+                    System.out.println("Регистрационный номер записан неправильно!");
                     return;
                 }
             }
         }
-        System.out.println("Регистрационный номер записан правильно");
+        System.out.println("Регистрационный номер записан правильно.");
     }
 }

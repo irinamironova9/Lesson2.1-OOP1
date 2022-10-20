@@ -2,6 +2,7 @@ import transport.Car;
 
 public class Main {
     public static void main(String[] args) {
+
         // Люди
 
         Person maxim = new Person("Максим", 1987, "Минск", "бренд-менеджер");
@@ -17,38 +18,57 @@ public class Main {
         artyom.sayHello();
         vladimir.sayHello();
         person.sayHello();
+        System.out.println();
 
         // Машины
 
-        //Car lada = new Car("Lada", "Grande", 1.7, "жёлтый", 2015, "Россия");
-        //Car audi = new Car("Audi", "A8 50 L TDI quattro", 3, "чёрный", 2020, "Германия");
-        //Car bmw = new Car("BMW", "Z8", 3, "чёрный", 2021, "Германия");
-        //Car kia = new Car("KIA", "Sportage 4", 2.4, "красный", 2018, "Южная Корея");
-        //Car hyundai = new Car("Hyundai", "Avante", 1.6, "оранжевый", 2016, "Германия");
-        //Car car = new Car(null, null, 0, null, 0, null);
+        Car lada = new Car("Lada", "Grande", 1.7, "жёлтый", 2015,
+                "Россия", "механическая", "седан", "а123ту153",
+                4, "летняя");
+        Car audi = new Car("Audi", "A8 50 L TDI quattro", 3.0, "чёрный",
+                2020, "Германия", "автоматическая", "седан", "м675но654",
+                4, "зимняя");
+        Car bmw = new Car("BMW", "Z8", 3.0, "чёрный", 2021,
+                "Германия", "роботизированная", "хэтчбек", "а987нв234",
+                4, "летняя");
+        Car kia = new Car("KIA", "Sportage 4", 2.4, "красный", 2018,
+                "Южная Корея", "механическая", "седан", "к498ко319",
+                4, "зимняя");
+        Car hyundai = new Car("Hyundai", "Avante", 1.6, "оранжевый",
+                2016, "Германия", "автоматическая", "внедорожник", "о783ау156",
+                0, "летняя");
+        Car car = new Car(null, null, null, null, 0,
+                null, "", "    ", null,
+                null, null);
 
-//        lada.display();
-//        audi.display();
-//        bmw.display();
-//        kia.display();
-//        hyundai.display();
-//        car.display();
+        lada.display();
+        System.out.println();
+        audi.display();
+        System.out.println();
+        bmw.display();
+        System.out.println();
+        kia.display();
+        System.out.println();
+        hyundai.display();
+        System.out.println();
+        car.display();
+        System.out.println();
 
-        System.out.println("");
-        Car car1 = new Car("Lada", "Grande", 1.7, "жёлтый", 2015, "Россия", null, null, null, null, null);
-//        car1.changeTires_Input();
-        System.out.println("новые шины - " + car1.getTires());
-        System.out.println("");
+        System.out.printf("Сейчас у KIA %s резина.%n", kia.getTires());
+        kia.setTires("осенняя");
+        kia.setTires("зимняя");
+        System.out.printf("Сейчас у KIA %s резина.%n", kia.getTires());
+        kia.changeTires_Input();
+        System.out.printf("Сейчас у KIA %s резина.%n", kia.getTires());
+        kia.changeTires_Season();
+        System.out.printf("Сейчас у KIA %s резина.%n", kia.getTires());
 
-        Car car2 = new Car("Lada", "Grande", 1.7, "жёлтый", 2015, "Россия", null, null, null, null, null);
-        car2.setTires("летняя");
-        System.out.println(car2.getTires());
-        car2.changeTires_Season();
-        System.out.println(car2.getTires());
-        System.out.println("");
+        System.out.println();
 
-        car2.setRegistrationNumber("м123но123");
-        car2.checkRegNumFormatIsCorrect();
+        audi.checkRegNumFormatIsCorrect();
+        audi.setRegistrationNumber("м456т68д9");
+        audi.checkRegNumFormatIsCorrect();
+        System.out.println();
 
         // Цветы
 
@@ -63,6 +83,7 @@ public class Main {
         peony.display();
         gypsophila.display();
         flower.display();
+        System.out.println();
 
         // Доп. задание по цветам
 

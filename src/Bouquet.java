@@ -14,7 +14,7 @@ public class Bouquet {
 
     public void addFlower(Flower flower, int amount) {
         if (filledIn == flowerKinds.length) {
-            throw new RuntimeException("Превышен заданный лимит видов цветов!");
+            throw new RuntimeException("Превышен заданный лимит видов цветов для этого букета!");
         }
         if (flower != null && amount > 0) {
             flowerKinds[filledIn] = flower;
