@@ -1,9 +1,68 @@
 package transport;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Car {
+    public class Key{
+        private final boolean remoteEngineStart;
+        private final boolean keylessEntry;
+
+        public Key(String isThereRemoteEngineStart, String isThereKeylessEntry) {
+            if (isThereRemoteEngineStart != null && !isThereRemoteEngineStart.isEmpty()
+                    && !isThereRemoteEngineStart.isBlank()) {
+                remoteEngineStart = isThereRemoteEngineStart.equals("да");
+            } else {
+                remoteEngineStart = false;
+            }
+
+            if (isThereKeylessEntry != null && !isThereKeylessEntry.isEmpty()
+                    && !isThereKeylessEntry.isBlank()) {
+                keylessEntry = isThereKeylessEntry.equals("да");
+            } else {
+                keylessEntry = false;
+            }
+        }
+
+        public boolean isRemoteEngineStart() {
+            return remoteEngineStart;
+        }
+
+        public boolean isKeylessEntry() {
+            return keylessEntry;
+        }
+    }
+
+    public class Insurance {
+        private final LocalDate validBefore;
+        private final double cost;
+        private final String number;
+
+        public Insurance(LocalDate validBefore, Double cost, String number) {
+            this.validBefore = Objects.requireNonNullElseGet(validBefore, () -> LocalDate.now().plusMonths(3));
+
+            this.cost = cost != null && cost >= 0 ? cost : 1000.00;
+
+            this.number = number != null && !number.isEmpty() && !number.isBlank() ?
+                    number : "(информация не указана)";
+        }
+
+        public void checkInsuranceIsValid() {
+            if (!validBefore.isAfter(LocalDate.now())) {
+                System.out.println("Обновите страховку!");
+            }
+        }
+
+        public void CheckNumberIsCorrect() {
+            if (number.length() == 9) {
+                System.out.println("Номер страховки корректный.");
+            } else {
+                System.out.println("Номер страховки некорректный!");
+            }
+        }
+    }
+
     private final String brand;
     private final String model;
     private double engineVolume;
@@ -15,6 +74,8 @@ public class Car {
     private String registrationNumber;
     private final int seats;
     private String tires;
+    private Key key;
+    private Insurance insurance;
 
     public Car(String brand, String model, Double engineVolume, String color, Integer year,
                String country, String transmission, String bodyType, String registrationNumber,

@@ -1,4 +1,5 @@
 import transport.Car;
+import transport.Car.Key;
 
 public class Main {
     public static void main(String[] args) {
@@ -68,6 +69,22 @@ public class Main {
         audi.checkRegNumFormatIsCorrect();
         audi.setRegistrationNumber("м456т68д9");
         audi.checkRegNumFormatIsCorrect();
+        System.out.println();
+
+        Key hyundaiKey = hyundai.new Key("нет", "да");
+        System.out.println(hyundaiKey.isRemoteEngineStart());
+        System.out.println(hyundaiKey.isKeylessEntry());
+        System.out.println();
+
+        Car.Insurance ladaIns = lada.new Insurance(null, 2000.00, "487204091");
+        Car.Insurance audiIns = audi.new Insurance(null, 1000.00, "488738647701");
+        Car.Insurance bmwIns = bmw.new Insurance(null, 3000.00, "417009491");
+        Car.Insurance kiaIns = kia.new Insurance(null, 2500.00, "48264091");
+        Car.Insurance hyundaiIns = hyundai.new Insurance(null, 1100.00, "412004091");
+
+        ladaIns.CheckNumberIsCorrect();
+        audiIns.CheckNumberIsCorrect();
+        bmwIns.checkInsuranceIsValid();
         System.out.println();
 
         // Цветы
