@@ -1,4 +1,6 @@
+import transport.Bus;
 import transport.Car;
+import transport.Train;
 
 public class Main {
     public static void main(String[] args) {
@@ -36,7 +38,7 @@ public class Main {
         System.out.println();
 
         System.out.printf("Сейчас у Lada %s резина.%n", lada.getTires());
-        lada.changeTiresByInput();
+//        lada.changeTiresByInput();
         System.out.printf("Сейчас у Lada %s резина.%n", lada.getTires());
         System.out.println();
         System.out.printf("Сейчас у BMW %s резина.%n", bmw.getTires());
@@ -66,6 +68,33 @@ public class Main {
         bmw.getInsurance().checkInsuranceIsValid();
         kia.getInsurance().checkInsuranceIsValid();
         hyundai.getInsurance().checkInsuranceIsValid();
+        System.out.println();
+
+        // Поезда
+
+        Train lastochka = new Train("Ласточка", "B-901", 2011, "Россия",
+                null, 301, 3500.00, null,
+                "Белорусский вокзал", "Минск-Пассажирский", 11);
+        Train leningrad = new Train("Ленинград", "D-125", 2019, "Россия",
+                null, 270, 1700.00, null,
+                "Ленинградский вокзал", "Ленинград-Пассажирский", 8);
+
+        lastochka.display();
+        System.out.println();
+        leningrad.display();
+        System.out.println();
+
+        // Автобусы
+
+        Bus schoolBus = new Bus("JHF", "B-43", 2018, "США", "жёлтый", 60);
+        Bus busToFinland = new Bus("VLJHF", "hf 321", 2020, "Финляндия", "синий", 90);
+        Bus bus = new Bus("Toyota", "Bus-157", 2015, "Япония", null, 90);
+
+        schoolBus.display();
+        System.out.println();
+        busToFinland.display();
+        System.out.println();
+        bus.display();
         System.out.println();
     }
 }

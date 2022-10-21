@@ -21,6 +21,10 @@ public class Transport {
         this(brand, model, year, country, null, null);
     }
 
+    public void display() {
+
+    }
+
     public String getBrand() {
         return brand;
     }
