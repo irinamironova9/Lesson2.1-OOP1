@@ -4,12 +4,13 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Car {
+public class Car extends Transport {
     public class Key{
         private final boolean remoteEngineStart;
         private final boolean keylessEntry;
 
-        public Key(String isThereRemoteEngineStart, String isThereKeylessEntry) {
+        private Key(String isThereRemoteEngineStart, String isThereKeylessEntry) {
+
             if (isThereRemoteEngineStart != null && !isThereRemoteEngineStart.isEmpty()
                     && !isThereRemoteEngineStart.isBlank()) {
                 remoteEngineStart = isThereRemoteEngineStart.equals("да");
@@ -25,11 +26,11 @@ public class Car {
             }
         }
 
-        public boolean isRemoteEngineStart() {
+        public boolean getRemoteEngineStart() {
             return remoteEngineStart;
         }
 
-        public boolean isKeylessEntry() {
+        public boolean getKeylessEntry() {
             return keylessEntry;
         }
     }
@@ -39,38 +40,45 @@ public class Car {
         private final double cost;
         private final String number;
 
-        public Insurance(LocalDate validBefore, Double cost, String number) {
-            this.validBefore = Objects.requireNonNullElseGet(validBefore, () -> LocalDate.now().plusMonths(3));
+        private Insurance(LocalDate validBefore, Double cost, String number) {
 
+            this.validBefore = Objects.requireNonNullElseGet(validBefore,
+                    () -> LocalDate.now().plusMonths(3));
             this.cost = cost != null && cost >= 0 ? cost : 1000.00;
-
             this.number = number != null && !number.isEmpty() && !number.isBlank() ?
                     number : "(информация не указана)";
         }
 
         public void checkInsuranceIsValid() {
-            if (!validBefore.isAfter(LocalDate.now())) {
-                System.out.println("Обновите страховку!");
+            if (validBefore.isAfter(LocalDate.now())) {
+                System.out.println("Страховка действительна.");
             } else {
-                System.out.println("Страховка в порядке.");
+                System.out.println("Обновите страховку!");
             }
         }
 
-        public void CheckNumberIsCorrect() {
+        public void CheckInsNumberIsCorrect() {
             if (number.length() == 9) {
                 System.out.println("Номер страховки корректный.");
             } else {
                 System.out.println("Номер страховки некорректный!");
             }
         }
+
+        public LocalDate getValidBefore() {
+            return validBefore;
+        }
+
+        public double getCost() {
+            return cost;
+        }
+
+        public String getNumber() {
+            return number;
+        }
     }
 
-    private final String brand;
-    private final String model;
     private double engineVolume;
-    private String color;
-    private final int year;
-    private final String country;
     private String transmission;
     private final String bodyType;
     private String registrationNumber;
@@ -79,118 +87,92 @@ public class Car {
     private Key key;
     private Insurance insurance;
 
-    public Car(String brand, String model, Double engineVolume, String color, Integer year,
-               String country, String transmission, String bodyType, String registrationNumber,
-               Integer seats, String tires) {
+    public Car(String brand, String model, Integer year, String country, String color,
+               Integer maxKmPerHour, Double engineVolume, String transmission, String bodyType,
+               String registrationNumber, Integer seats, String tires) {
 
-        if (brand != null && !brand.isEmpty() && !brand.isBlank()) {
-            this.brand = brand;
-        } else {
-            this.brand = "default";
-        }
+        super(brand, model, year, country, color, maxKmPerHour);
+        this.setEngineVolume(engineVolume);
+        this.setTransmission(transmission);
+        this.bodyType = bodyType != null && !bodyType.isEmpty() && !bodyType.isBlank() ?
+                bodyType : "default";
+        this.setRegistrationNumber(registrationNumber);
+        this.seats = seats != null && seats > 0 ? seats : 4;
+        this.setTires(tires);
+    }
 
-        if (model != null && !model.isEmpty() && !model.isBlank()) {
-            this.model = model;
-        } else {
-            this.model = "default";
-        }
+    public Car(String brand, String model, Integer year, String country, String bodyType, Integer seats) {
 
-        if (engineVolume != null && engineVolume > 0) {
-            this.engineVolume = engineVolume;
-        } else {
-            this.engineVolume = 1.5;
-        }
-
-        if (color != null && !color.isEmpty() && !color.isBlank()) {
-            this.color = color;
-        } else {
-            this.color = "белый";
-        }
-
-        if (year != null && year > 0) {
-            this.year = year;
-        } else {
-            this.year = 2000;
-        }
-
-        if (country != null && !country.isEmpty() && !country.isBlank()) {
-            this.country = country;
-        } else {
-            this.country = "default";
-        }
-
-        if (transmission != null && !transmission.isEmpty() && !transmission.isBlank()) {
-            this.transmission = transmission;
-        } else {
-            this.transmission = "default";
-        }
-
-        if (bodyType != null && !bodyType.isEmpty() && !bodyType.isBlank()) {
-            this.bodyType = bodyType;
-        } else {
-            this.bodyType = "default";
-        }
-
-        if (registrationNumber != null && !registrationNumber.isEmpty() && !registrationNumber.isBlank()) {
-            this.registrationNumber = registrationNumber;
-        } else {
-            this.registrationNumber = "(информация не указана)";
-        }
-
-        if (seats != null && seats > 0) {
-            this.seats = seats;
-        } else {
-            this.seats = 4;
-        }
-
-        if (tires != null && !tires.isEmpty() && !tires.isBlank()) {
-            if (tires.equals("зимняя") || tires.equals("летняя")) {
-                this.tires = tires;
-            } else {
-                this.tires = "летняя";
-            }
-        } else {
-            this.tires = "летняя";
-        }
+        this(brand, model, year, country, null, null, null,
+                null, bodyType, null, seats, null);
     }
 
     public void display() {
-        System.out.printf("%s %s со следующими характеристиками:%n" +
-                "Объём двигателя: %s л%n" +
-                "Цвет кузова: %s%n" +
-                "Год производства: %s%n" +
-                "Страна сборки: %s%n" +
-                "Коробка передач: %s%n" +
-                "Тип кузова: %s%n" +
-                "Регистрационный номер: %s%n" +
-                "Кол-во мест: %s%n" +
-                "Резина: %s%n",
-                brand, model, engineVolume, color, year, country, transmission,
-                bodyType, registrationNumber, seats, tires);
+        System.out.printf("Автомобиль %s %s со следующими характеристиками:%n" +
+                        "Год производства: %s%n" +
+                        "Страна сборки: %s%n" +
+                        "Цвет кузова: %s%n" +
+                        "Максимальная скорость: %s км/ч%n" +
+                        "Объём двигателя: %s л%n" +
+                        "Коробка передач: %s%n" +
+                        "Тип кузова: %s%n" +
+                        "Регистрационный номер: %s%n" +
+                        "Кол-во мест: %s%n" +
+                        "Резина: %s%n",
+                getBrand(), getModel(), getYear(), getCountry(), getColor(), getMaxKmPerHour(),
+                engineVolume, transmission, bodyType, registrationNumber, seats, tires);
     }
 
-    public String getBrand() {
-        return brand;
+    public void changeTiresByInput() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Нажмите 1 для смены резины на зимнюю или 2 для смены резины на летнюю");
+        if (scanner.hasNext()) {
+            String input = scanner.next();
+            if (input.equals("1")) {
+                tires = "зимняя";
+                System.out.println("Вы сменили шины на зимние");
+            } else if (input.equals("2")) {
+                tires = "летняя";
+                System.out.println("Вы сменили шины на летние");
+            } else {
+                System.out.println("Недопустимый символ! Резина не заменена.");
+            }
+        }
     }
 
-    public String getModel() {
-        return model;
+    public void changeTiresBySeason() {
+        if (LocalDate.now().getMonthValue() >= 5 && LocalDate.now().getMonthValue() <= 9) {
+            tires = "летняя";
+            System.out.println("Установлена летняя резина");
+        } else {
+            tires = "зимняя";
+            System.out.println("Установлена зимняя резина");
+        }
+    }
+
+    public void checkRegNumFormatIsCorrect() {
+        if (registrationNumber.length() != 9) {
+            System.out.println("Регистрационный номер записан неправильно!");
+            return;
+        }
+        for (int i = 0; i < 9; i++) {
+            if (i == 0 || i == 4 || i == 5) {
+                if (Character.isDigit(registrationNumber.charAt(i))) {
+                    System.out.println("Регистрационный номер записан неправильно!");
+                    return;
+                }
+            } else {
+                if (!Character.isDigit(registrationNumber.charAt(i))) {
+                    System.out.println("Регистрационный номер записан неправильно!");
+                    return;
+                }
+            }
+        }
+        System.out.println("Регистрационный номер записан правильно.");
     }
 
     public double getEngineVolume() {
         return engineVolume;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public String getCountry() {
-        return country;
     }
 
     public String getTransmission() {
@@ -213,103 +195,59 @@ public class Car {
         return tires;
     }
 
-    public void setEngineVolume(Double engineVolume) {
-        if (engineVolume != null && engineVolume > 0) {
-            this.engineVolume = engineVolume;
-        } else {
-            this.engineVolume = 1.5;
-        }
+    public Key getKey() {
+        return key;
     }
 
-    public void setColor(String color) {
-        if (color != null && !color.isEmpty() && !color.isBlank()) {
-            this.color = color;
-        } else {
-            this.color = "белый";
-        }
+    public Insurance getInsurance() {
+        return insurance;
+    }
+
+    public void setEngineVolume(Double engineVolume) {
+        this.engineVolume = engineVolume != null && engineVolume > 0 ? engineVolume : 1.5;
     }
 
     public void setTransmission(String transmission) {
-        if (transmission != null && !transmission.isEmpty() && !transmission.isBlank()) {
-            this.transmission = transmission;
-        } else {
-            this.transmission = "default";
-        }
+        this.transmission = transmission != null && !transmission.isEmpty() && !transmission.isBlank() ?
+                transmission : "default";
     }
 
     public void setRegistrationNumber(String registrationNumber) {
-        if (registrationNumber != null && !registrationNumber.isEmpty() && !registrationNumber.isBlank()) {
-            this.registrationNumber = registrationNumber;
-        } else {
-            this.registrationNumber = "(информация не указана)";
-        }
+        this.registrationNumber = registrationNumber != null && !registrationNumber.isEmpty()
+                && !registrationNumber.isBlank() ? registrationNumber : "(информация не указана)";
     }
 
-    public void setTires(String tires) {
+    private void setTires(String tires) {
         if (tires != null && !tires.isEmpty() && !tires.isBlank()) {
             if (tires.equals("зимняя") || tires.equals("летняя")) {
                 this.tires = tires;
             } else {
                 this.tires = "летняя";
-                System.out.println("Введённое значение для резины шин не соответствует" +
-                        " 'зимняя' или 'летняя'. Присвоено значение по умолчанию - летняя резина.");
             }
         } else {
             this.tires = "летняя";
-            System.out.println("Введённое значение для резины шин не соответствует" +
-                    " 'зимняя' или 'летняя'. Присвоено значение по умолчанию - летняя резина.");
         }
     }
 
-    public void changeTires_Input() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Нажмите 1 для смены резины на зимнюю или 2 для смены резины на летнюю");
-        if (scanner.hasNext()) {
-            String input = scanner.next();
-            if (input.equals("1")) {
-                tires = "зимняя";
-                System.out.println("Вы сменили шины на зимние");
-            } else if (input.equals("2")) {
-                tires = "летняя";
-                System.out.println("Вы сменили шины на летние");
-            } else {
-                System.out.println("Недопустимый символ! Резина не заменена.");
-            }
-        }
+    public void setKey(String isThereRemoteEngineStart, String isThereKeylessEntry) {
+        key = new Key(isThereRemoteEngineStart, isThereKeylessEntry);
     }
 
-    public void changeTires_Season() {
-        if (LocalDate.now().getMonthValue() >= 5 && LocalDate.now().getMonthValue() <= 9) {
-            tires = "летняя";
-            System.out.println("Установлена летняя резина");
+    public void setInsurance(Integer yearValidBefore, Integer monthValidBefore, Integer dayValidBefore,
+                             Double cost, String number) {
+
+        LocalDate localDate;
+
+        if (yearValidBefore == null || yearValidBefore <= 0 ||
+                monthValidBefore == null || monthValidBefore <= 0 ||
+                dayValidBefore == null || dayValidBefore <= 0) {
+
+            localDate = null;
+
         } else {
-            tires = "зимняя";
-            System.out.println("Установлена зимняя резина");
+            localDate = LocalDate.of(yearValidBefore, monthValidBefore, dayValidBefore);
         }
-    }
 
-    public void checkRegNumFormatIsCorrect() {
-        if (registrationNumber.length() != 9) {
-            System.out.println("Регистрационный номер записан неправильно!");
-            return;
-        }
-        for (int i = 0; i < 9; i++) {
-            if (i == 0 || i == 4 || i == 5) {
-                if (!Character.isDigit(registrationNumber.charAt(i))) {
-                    continue;
-                } else {
-                    System.out.println("Регистрационный номер записан неправильно!");
-                    return;
-                }
-            } else {
-                if (Character.isDigit(registrationNumber.charAt(i))) {
-                    continue;
-                } else {
-                    System.out.println("Регистрационный номер записан неправильно!");
-                    return;
-                }
-            }
-        }
-        System.out.println("Регистрационный номер записан правильно.");
+        insurance = new Insurance(localDate, cost, number);
     }
 }
