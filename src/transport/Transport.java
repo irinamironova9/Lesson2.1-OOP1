@@ -1,29 +1,45 @@
 package transport;
 
-public class Transport {
+public abstract class Transport {
     private final String brand;
     private final String model;
     private final int year;
     private final String country;
     private String color;
     private int maxKmPerHour;
+    private final String fuelType;
 
-    public Transport(String brand, String model, Integer year, String country, String color, Integer maxKmPerHour) {
+    public Transport(String brand, String model, Integer year, String country, String color,
+                     Integer maxKmPerHour, String fuelType) {
+
         this.brand = brand != null && !brand.isEmpty() && !brand.isBlank() ? brand : "default";
         this.model = model != null && !model.isEmpty() && !model.isBlank() ? model : "default";
         this.year = year != null && year > 0 ? year : 2000;
         this.country = country != null && !country.isEmpty() && !country.isBlank() ? country : "default";
         this.setColor(color);
         this.setMaxKmPerHour(maxKmPerHour);
+
+        if (this.getClass() == Train.class) {
+            this.fuelType = "дизельное топливо";
+        } else if (fuelType != null && !fuelType.isEmpty() && !fuelType.isBlank()) {
+            if (fuelType.equals("бензин") || fuelType.equals("дизельное топливо") ||
+                    fuelType.equals("электричество")) {
+                this.fuelType = fuelType;
+            } else {
+                this.fuelType = "бензин";
+            }
+        } else {
+            this.fuelType = "бензин";
+        }
     }
 
-    public Transport(String brand, String model, Integer year, String country) {
-        this(brand, model, year, country, null, null);
+    public Transport(String brand, String model, Integer year, String country, String fuelType) {
+        this(brand, model, year, country, null, null, fuelType);
     }
 
-    public void display() {
+    public abstract void display();
 
-    }
+    public abstract void refill();
 
     public String getBrand() {
         return brand;
@@ -47,6 +63,10 @@ public class Transport {
 
     public int getMaxKmPerHour() {
         return maxKmPerHour;
+    }
+
+    public String getFuelType() {
+        return fuelType;
     }
 
     public void setColor(String color) {

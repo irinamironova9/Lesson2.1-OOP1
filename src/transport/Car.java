@@ -88,10 +88,10 @@ public class Car extends Transport {
     private Insurance insurance;
 
     public Car(String brand, String model, Integer year, String country, String color,
-               Integer maxKmPerHour, Double engineVolume, String transmission, String bodyType,
-               String registrationNumber, Integer seats, String tires) {
+               Integer maxKmPerHour, String fuelType, Double engineVolume, String transmission,
+               String bodyType, String registrationNumber, Integer seats, String tires) {
 
-        super(brand, model, year, country, color, maxKmPerHour);
+        super(brand, model, year, country, color, maxKmPerHour, fuelType);
         this.setEngineVolume(engineVolume);
         this.setTransmission(transmission);
         this.bodyType = bodyType != null && !bodyType.isEmpty() && !bodyType.isBlank() ?
@@ -101,9 +101,10 @@ public class Car extends Transport {
         this.setTires(tires);
     }
 
-    public Car(String brand, String model, Integer year, String country, String bodyType, Integer seats) {
+    public Car(String brand, String model, Integer year, String country, String fuelType,
+               String bodyType, Integer seats) {
 
-        this(brand, model, year, country, null, null, null,
+        this(brand, model, year, country, null, null, fuelType, null,
                 null, bodyType, null, seats, null);
     }
 
@@ -113,6 +114,7 @@ public class Car extends Transport {
                         "Страна сборки: %s%n" +
                         "Цвет кузова: %s%n" +
                         "Максимальная скорость: %s км/ч%n" +
+                        "Тип топлива: %s%n" +
                         "Объём двигателя: %s л%n" +
                         "Коробка передач: %s%n" +
                         "Тип кузова: %s%n" +
@@ -120,7 +122,18 @@ public class Car extends Transport {
                         "Кол-во мест: %s%n" +
                         "Резина: %s%n",
                 getBrand(), getModel(), getYear(), getCountry(), getColor(), getMaxKmPerHour(),
-                engineVolume, transmission, bodyType, registrationNumber, seats, tires);
+                getFuelType(), engineVolume, transmission, bodyType, registrationNumber, seats, tires);
+    }
+
+    @Override
+    public void refill() {
+        if (getFuelType().equals("бензин")) {
+            System.out.println("Автомобиль заправлен бензином.");
+        } else if (getFuelType().equals("дизельное топливо")) {
+            System.out.println("Автомобиль заправлен дизельным топливом.");
+        } else {
+            System.out.println("Автомобиль заряжен.");
+        }
     }
 
     public void changeTiresByInput() {

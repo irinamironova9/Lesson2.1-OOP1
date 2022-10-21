@@ -8,10 +8,10 @@ public class Train extends Transport {
     private int numberOfCars;
 
     public Train(String brand, String model, Integer year, String country, String color,
-                 Integer maxKmPerHour, Double tripCost, Double tripDurationInHours,
+                 Integer maxKmPerHour, String fuelType, Double tripCost, Double tripDurationInHours,
                  String departureStation, String arrivalStation, Integer numberOfCars) {
 
-        super(brand, model, year, country, color, maxKmPerHour);
+        super(brand, model, year, country, color, maxKmPerHour, fuelType);
         setTripCost(tripCost);
         setTripDurationInHours(tripDurationInHours);
         setDepartureStation(departureStation);
@@ -19,8 +19,8 @@ public class Train extends Transport {
         setNumberOfCars(numberOfCars);
     }
 
-    public Train(String brand, String model, Integer year, String country) {
-        super(brand, model, year, country);
+    public Train(String brand, String model, Integer year, String country, String fuelType) {
+        super(brand, model, year, country, fuelType);
     }
 
     public void display() {
@@ -29,13 +29,19 @@ public class Train extends Transport {
                 "Страна сборки: %s%n" +
                 "Цвет кузова: %s%n" +
                 "Максимальная скорость: %s км/ч%n" +
+                        "Тип топлива: %s%n" +
                 "Цена поездки: %.2f руб.%n" +
                 "Длительность поездки: %.0f часов%n" +
                 "Станция отправления: %s%n" +
                 "Станция прибытия: %s%n" +
                 "Кол-во вагонов: %s%n",
                 getBrand(), getModel(), getYear(), getCountry(), getColor(), getMaxKmPerHour(),
-                tripCost, tripDurationInHours, departureStation, arrivalStation, numberOfCars);
+                getFuelType(), tripCost, tripDurationInHours, departureStation, arrivalStation, numberOfCars);
+    }
+
+    @Override
+    public void refill() {
+        System.out.println("Поезд заправлен дизельным топливом.");
     }
 
     public double getTripCost() {
