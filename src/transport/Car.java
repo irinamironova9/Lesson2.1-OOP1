@@ -51,6 +51,8 @@ public class Car {
         public void checkInsuranceIsValid() {
             if (!validBefore.isAfter(LocalDate.now())) {
                 System.out.println("Обновите страховку!");
+            } else {
+                System.out.println("Страховка в порядке.");
             }
         }
 
