@@ -1,6 +1,4 @@
-import transport.Bus;
-import transport.Car;
-import transport.Train;
+package transport;
 
 public class Main {
     public static void main(String[] args) {
@@ -38,7 +36,7 @@ public class Main {
         System.out.println();
 
         System.out.printf("Сейчас у Lada %s резина.%n", lada.getTires());
-//        lada.changeTiresByInput();
+        lada.changeTiresByInput();
         System.out.printf("Сейчас у Lada %s резина.%n", lada.getTires());
         System.out.println();
         System.out.printf("Сейчас у BMW %s резина.%n", bmw.getTires());
