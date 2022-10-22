@@ -11,19 +11,8 @@ public class Car extends Transport {
 
         private Key(String isThereRemoteEngineStart, String isThereKeylessEntry) {
 
-            if (isThereRemoteEngineStart != null && !isThereRemoteEngineStart.isEmpty()
-                    && !isThereRemoteEngineStart.isBlank()) {
-                remoteEngineStart = isThereRemoteEngineStart.equals("да");
-            } else {
-                remoteEngineStart = false;
-            }
-
-            if (isThereKeylessEntry != null && !isThereKeylessEntry.isEmpty()
-                    && !isThereKeylessEntry.isBlank()) {
-                keylessEntry = isThereKeylessEntry.equals("да");
-            } else {
-                keylessEntry = false;
-            }
+            remoteEngineStart = parse(isThereRemoteEngineStart).equals("да");
+            keylessEntry = parse(isThereKeylessEntry).equals("да");
         }
 
         public boolean getRemoteEngineStart() {
@@ -45,8 +34,7 @@ public class Car extends Transport {
             this.validBefore = Objects.requireNonNullElseGet(validBefore,
                     () -> LocalDate.now().plusMonths(3));
             this.cost = cost != null && cost >= 0 ? cost : 1000.00;
-            this.number = number != null && !number.isEmpty() && !number.isBlank() ?
-                    number : "(информация не указана)";
+            this.number = parse1(number);
         }
 
         public void checkInsuranceIsValid() {
@@ -94,8 +82,7 @@ public class Car extends Transport {
         super(brand, model, year, country, color, maxKmPerHour, fuelType);
         this.setEngineVolume(engineVolume);
         this.setTransmission(transmission);
-        this.bodyType = bodyType != null && !bodyType.isEmpty() && !bodyType.isBlank() ?
-                bodyType : "default";
+        this.bodyType = parse(bodyType);
         this.setRegistrationNumber(registrationNumber);
         this.seats = seats != null && seats > 0 ? seats : 4;
         this.setTires(tires);
@@ -127,13 +114,8 @@ public class Car extends Transport {
 
     @Override
     public void refill() {
-        if (getFuelType().equals("бензин")) {
-            System.out.println("Автомобиль заправлен бензином.");
-        } else if (getFuelType().equals("дизельное топливо")) {
-            System.out.println("Автомобиль заправлен дизельным топливом.");
-        } else {
-            System.out.println("Автомобиль заряжен.");
-        }
+        System.out.println("Можно заправлять бензином, дизелем на заправке или заряжать на специальных " +
+                "электропарковках, если это электрокар.");
     }
 
     public void changeTiresByInput() {
@@ -221,25 +203,16 @@ public class Car extends Transport {
     }
 
     public void setTransmission(String transmission) {
-        this.transmission = transmission != null && !transmission.isEmpty() && !transmission.isBlank() ?
-                transmission : "default";
+        this.transmission = parse(transmission);
     }
 
     public void setRegistrationNumber(String registrationNumber) {
-        this.registrationNumber = registrationNumber != null && !registrationNumber.isEmpty()
-                && !registrationNumber.isBlank() ? registrationNumber : "(информация не указана)";
+        this.registrationNumber = parse1(registrationNumber);
     }
 
     private void setTires(String tires) {
-        if (tires != null && !tires.isEmpty() && !tires.isBlank()) {
-            if (tires.equals("зимняя") || tires.equals("летняя")) {
-                this.tires = tires;
-            } else {
-                this.tires = "летняя";
-            }
-        } else {
-            this.tires = "летняя";
-        }
+        tires = parse(tires);
+        this.tires = tires.equals("зимняя") ? tires : "летняя";
     }
 
     public void setKey(String isThereRemoteEngineStart, String isThereKeylessEntry) {

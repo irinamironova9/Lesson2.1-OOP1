@@ -24,10 +24,6 @@ public class Bus extends Transport {
 
     @Override
     public void refill() {
-        if (getFuelType().equals("бензин")) {
-            System.out.println("Автобус заправлен бензином.");
-        } else {
-            System.out.println("Автобус заправлен дизельным топливом.");
-        }
+        System.out.println("Можно заправлять бензином или дизелем на заправке.");
     }
 }

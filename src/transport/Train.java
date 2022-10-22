@@ -41,7 +41,7 @@ public class Train extends Transport {
 
     @Override
     public void refill() {
-        System.out.println("Поезд заправлен дизельным топливом.");
+        System.out.println("Нужно заправлять дизельным топливом.");
     }
 
     public double getTripCost() {
@@ -74,13 +74,11 @@ public class Train extends Transport {
     }
 
     public void setDepartureStation(String departureStation) {
-        this.departureStation = departureStation != null && !departureStation.isEmpty() &&
-                !departureStation.isBlank() ? departureStation : "(информация не указана)";
+        this.departureStation = parse1(departureStation);
     }
 
     public void setArrivalStation(String arrivalStation) {
-        this.arrivalStation = arrivalStation != null && !arrivalStation.isEmpty() &&
-                !arrivalStation.isBlank() ? arrivalStation : "(информация не указана)";
+        this.arrivalStation = parse1(arrivalStation);
     }
 
     public void setNumberOfCars(Integer numberOfCars) {

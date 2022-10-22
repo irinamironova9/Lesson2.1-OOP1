@@ -12,29 +12,25 @@ public abstract class Transport {
     public Transport(String brand, String model, Integer year, String country, String color,
                      Integer maxKmPerHour, String fuelType) {
 
-        this.brand = brand != null && !brand.isEmpty() && !brand.isBlank() ? brand : "default";
-        this.model = model != null && !model.isEmpty() && !model.isBlank() ? model : "default";
+        this.brand = parse(brand);
+        this.model = parse(model);
         this.year = year != null && year > 0 ? year : 2000;
-        this.country = country != null && !country.isEmpty() && !country.isBlank() ? country : "default";
+        this.country = parse(country);
         this.setColor(color);
         this.setMaxKmPerHour(maxKmPerHour);
-
-        if (this.getClass() == Train.class) {
-            this.fuelType = "дизельное топливо";
-        } else if (fuelType != null && !fuelType.isEmpty() && !fuelType.isBlank()) {
-            if (fuelType.equals("бензин") || fuelType.equals("дизельное топливо") ||
-                    fuelType.equals("электричество")) {
-                this.fuelType = fuelType;
-            } else {
-                this.fuelType = "бензин";
-            }
-        } else {
-            this.fuelType = "бензин";
-        }
+        this.fuelType = parse(fuelType);
     }
 
     public Transport(String brand, String model, Integer year, String country, String fuelType) {
         this(brand, model, year, country, null, null, fuelType);
+    }
+
+    public String parse(String value){
+        return value != null && !value.isEmpty() && !value.isBlank() ? value : "default";
+    }
+
+    public String parse1(String value){
+        return value != null && !value.isEmpty() && !value.isBlank() ? value : "(информация не указана)";
     }
 
     public abstract void display();
